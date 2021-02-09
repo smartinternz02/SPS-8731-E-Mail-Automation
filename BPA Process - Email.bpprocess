@@ -1,0 +1,79 @@
+﻿<process name="Email" version="1.0" bpversion="6.10.0.30674" narrative="&#xD;&#xA;" byrefcollection="true" preferredid="1b65a917-1e83-411f-9bc7-0441646f8a5e">
+  <view>
+    <camerax>0</camerax>
+    <cameray>-63</cameray>
+    <zoom version="2">1.25</zoom>
+  </view>
+  <preconditions />
+  <endpoint narrative="" />
+  <stage stageid="85d2dee0-57b2-434a-8db3-4cb6bea92ade" name="Start" type="Start">
+    <display x="15" y="-105" />
+    <onsuccess>6ccb8ea8-bfe1-4bb2-bcff-e48f83f742dc</onsuccess>
+  </stage>
+  <stage stageid="a58883bc-df36-418b-8017-46c48b9ad1e0" name="End" type="End">
+    <display x="15" y="45" />
+  </stage>
+  <stage stageid="18a2f04e-c616-4e3b-ac0c-48107872abe6" name="Stage1" type="ProcessInfo">
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="6ccb8ea8-bfe1-4bb2-bcff-e48f83f742dc" name="Email - POP3/SMTP::Configure" type="Action">
+    <loginhibit onsuccess="true" />
+    <display x="15" y="-60" />
+    <inputs>
+      <input type="text" name="Username" friendlyname="Username" narrative="The POP3 and SMTP Username" expr="[Username]" />
+      <input type="password" name="Password" friendlyname="Password" narrative="The POP3 and SMTP Password" expr="[Password]" />
+      <input type="text" name="POP3 Server" friendlyname="POP3 Server" narrative="The POP3 Server address e.g. pop.domain.com" expr="&quot;pop.gmail.com&quot;" />
+      <input type="text" name="SMTP Server" friendlyname="SMTP Server" narrative="The SMTP Server address e.g. smtp.domain.com" expr="&quot;smtp.gmail.com&quot;" />
+      <input type="number" name="POP3 Port" friendlyname="POP3 Port" narrative="The POP3 Port, e.g. 110 or 995" expr="995" />
+      <input type="number" name="SMTP Port" friendlyname="SMTP Port" narrative="The SMTP Port, e.g 25 or 465" expr="587" />
+      <input type="flag" name="POP3 UseSSL" friendlyname="POP3 UseSSL" narrative="Whether to use SSL for POP3" expr="True" />
+      <input type="flag" name="SMTP UseSSL" friendlyname="SMTP UseSSL" narrative="Whether to use SSL for SMTP" expr="True" />
+    </inputs>
+    <onsuccess>4539e2db-7d0a-4180-8377-0c93b28b489d</onsuccess>
+    <resource object="Email - POP3/SMTP" action="Configure" />
+  </stage>
+  <stage stageid="6fa4c46f-e3cb-406a-bd25-dfc2160b8260" name="Username" type="Data">
+    <loginhibit onsuccess="true" />
+    <display x="120" y="-90" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">iankuracharjee@gmail.com</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="4539e2db-7d0a-4180-8377-0c93b28b489d" name="Email - POP3/SMTP::Send Message" type="Action">
+    <loginhibit onsuccess="true" />
+    <display x="15" y="-15" />
+    <inputs>
+      <input type="text" name="From" friendlyname="From" narrative="The email address of the sender." expr="[Username]" />
+      <input type="text" name="To" friendlyname="To" narrative="The email address of the recipient. To address multiple recipients use the format &quot;john.smith@example.com, henry.jones@example.com&quot; OR &quot;John Smith &lt;john.smith@example.com&gt;, Henry Jones &lt;henry.jones@example.com&gt;&quot;." expr="[Username]" />
+      <input type="text" name="Subject" friendlyname="Subject" narrative="The subject of the email." expr="&quot;Congrats!&quot;" />
+      <input type="text" name="Body" friendlyname="Body" narrative="The body of the email." expr="&quot;You got the flag!&quot;" />
+      <input type="collection" name="Attachments" friendlyname="Attachments" narrative="A Collection containing a list of files to add to the email as attachments." expr="[Attachment]" />
+      <input type="flag" name="BodyIsHTML" friendlyname="BodyIsHTML" narrative="Indicates if the body should be sent as HTML" expr="" />
+    </inputs>
+    <onsuccess>a58883bc-df36-418b-8017-46c48b9ad1e0</onsuccess>
+    <resource object="Email - POP3/SMTP" action="Send Message" />
+  </stage>
+  <stage stageid="a3bcbde5-e780-4880-940f-b1d3c94983c3" name="Password" type="Data">
+    <loginhibit onsuccess="true" />
+    <display x="120" y="-45" />
+    <datatype>password</datatype>
+    <initialvalueenc>40,25,1,93,20,71,0,4,51</initialvalueenc>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="19a9eecd-ad60-4424-b6b3-c2e91e1f9b01" name="Attachment" type="Collection">
+    <display x="120" y="0" />
+    <datatype>collection</datatype>
+    <private />
+    <alwaysinit />
+    <collectioninfo>
+      <field name="Path" type="text" description="The path to a file to include as an attachment in the email." />
+    </collectioninfo>
+    <initialvalue>
+      <row>
+        <field name="Path" type="text" value="C:\user.txt" />
+      </row>
+    </initialvalue>
+  </stage>
+</process>
